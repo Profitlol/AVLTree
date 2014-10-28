@@ -1,5 +1,6 @@
 package avltree;
-
+import java.io.*;
+import java.util.*;
 /**
  *
  * @author Steven
@@ -32,11 +33,12 @@ public class AVLTree {
     }
 
     public Node root;
+    List<String> input; // again using this for the output
 
     public AVLTree() 
     {
         root = null;
-    }
+    }      
 
     public int height(Node n) 
     {
@@ -63,14 +65,12 @@ public class AVLTree {
         b.bf = height(b.left) - height(b.right);
     }
 
-    // need this to call in the main function
     public void insert(int key) 
     {
         root = insert(key, root);
     }
 
-    // insert int key onto node z, excluded whereRotate function
-    // figured that you want to see the logic behind this
+    // insert int key onto node z
     public Node insert(int key, Node t) 
     {
         if (t == null) 
@@ -105,8 +105,8 @@ public class AVLTree {
             t.height = maximum(height(t.left), height(t.right));        
         return t;
     }
-    
-    // moving a node to another node's position
+
+    // moving node position to another node's position
     public void transplant(Node x, Node y) 
     {
         if (x.parent == null) 
@@ -150,7 +150,8 @@ public class AVLTree {
         rightRotate(x.right);
         return leftRotate(x);
     }
-
+    
+    // probably dont need
     public Node minValue(Node x) 
     {
         while (x.left != null) 
@@ -158,14 +159,14 @@ public class AVLTree {
         return x;
     }
 
+    // probably dont need
     public Node maxValue(Node x) 
     {
         while (x.right != null) 
             x = x.right;        
         return x;
     }
-    
-    // searching for specific node
+
     public boolean search(Node x, int k) 
     {
         if (x == null) 
@@ -248,8 +249,69 @@ public class AVLTree {
         return select(x.right, i - 1 - (size(x.left)));
     }
     
-    public static void main(String[] args) {
-        // do the output
-    }
+    //doing same methods like KHeap
+    public static void main(String[] args) 
+    {		
+		String filepath = "AVLtree-input.txt";
+		AVLTree inp = new AVLTree();
+		inp.loadfile(filepath);
+		AVLTree avl = new AVLTree();
+		double startTime = System.nanoTime();
+		for (String s : inp.input) 
+			inp.opRunner(s, avl);		
+		double endTime = System.nanoTime();
+		double elapsed = endTime - startTime;
+		System.out.println(elapsed/1000.0 + "micro-sec");
+	}
+
+	public boolean loadfile(String path) 
+        {
+		input = new ArrayList<String>();
+		Scanner filescn;
+		int count = 0;
+		try {
+			filescn = new Scanner(new File("AVLtree-input.txt"));
+			while (filescn.hasNextLine()) 
+                        {
+				String line = filescn.nextLine();
+				input.add(line);
+				count++;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+                // again debugging statements
+		if (input.size() == count) {
+			// System.out.println("File successfully loaded " + count );
+			return true;
+		} else
+			// System.out.println("File load unsuccessfull. ");
+			return false;
+	}
+
+	public void opRunner(String s, AVLTree avl) 
+        {
+		String[] op = s.split(" ");	
+		if (op[0].compareTo("IN") == 0) 
+			avl.insert(Integer.parseInt(op[1]));
+                // fix this SC please
+		if (op[0].compareTo("SC") == 0) 
+                {
+			int k = Integer.parseInt(op[1]);
+//			Node suc =;
+//			System.out.println("Successor of: " + k + " = "+ suc.key);
+		}
+		if (op[0].compareTo("SE") == 0) 
+                {
+			int k = Integer.parseInt(op[1]);
+			Node sel = avl.select(avl.root,k);
+			System.out.println(k +"th smallest key is: " + sel.key);
+		}
+		if (op[0].compareTo("RA") == 0) 
+                {
+			int i = avl.rank(avl.root, Integer.parseInt(op[1]));
+			System.out.println("Rank of " + op[1] + " = "+ i);
+		}
+	}
     
 }
