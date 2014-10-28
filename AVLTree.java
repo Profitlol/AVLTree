@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package avltree;
 
 /**
@@ -68,12 +63,14 @@ public class AVLTree {
         b.bf = height(b.left) - height(b.right);
     }
 
-//    public void insert(int key) 
-//    {
-//        root = insert(key, root);
-//    }
+    // need this to call in the main function
+    public void insert(int key) 
+    {
+        root = insert(key, root);
+    }
 
-    // insert int key onto node z
+    // insert int key onto node z, excluded whereRotate function
+    // figured that you want to see the logic behind this
     public Node insert(int key, Node t) 
     {
         if (t == null) 
@@ -108,7 +105,8 @@ public class AVLTree {
             t.height = maximum(height(t.left), height(t.right));        
         return t;
     }
-
+    
+    // moving a node to another node's position
     public void transplant(Node x, Node y) 
     {
         if (x.parent == null) 
@@ -166,7 +164,8 @@ public class AVLTree {
             x = x.right;        
         return x;
     }
-
+    
+    // searching for specific node
     public boolean search(Node x, int k) 
     {
         if (x == null) 
