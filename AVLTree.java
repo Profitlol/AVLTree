@@ -268,12 +268,12 @@ public class AVLTree {
 		AVLTree inp = new AVLTree();
 		inp.loadfile(filepath);
 		AVLTree avl = new AVLTree();
-		double startTime = System.nanoTime();
+		//double startTime = System.nanoTime();
 		for (String s : inp.input) 
 			inp.opRunner(s, avl);		
-		double endTime = System.nanoTime();
-		double elapsed = endTime - startTime;
-		System.out.println(elapsed/1000.0 + "micro-sec");
+		//double endTime = System.nanoTime();
+		//double elapsed = endTime - startTime;
+		//System.out.println(elapsed/1000.0 + "micro-sec");
 	}
 
 	public boolean loadfile(String path) 
@@ -311,18 +311,21 @@ public class AVLTree {
                 {
 			int y = Integer.parseInt(op[1]);
                         Node suc = avl.successor(avl.searchKey(avl.root, y));
-			System.out.println("Successor of: " + y + " = "+ suc.key);
+			//System.out.println("Successor of: " + y + " = "+ suc.key);
+                        System.out.println(suc.key);
 		}
 		if (op[0].compareTo("SE") == 0) 
                 {
 			int k = Integer.parseInt(op[1]);
 			Node sel = avl.select(avl.root,k);
-			System.out.println(k +"th smallest key is: " + sel.key);
+			//System.out.println(k +"th smallest key is: " + sel.key);
+                        System.out.println(sel.key);
 		}
 		if (op[0].compareTo("RA") == 0) 
                 {
 			int i = avl.rank(avl.root, Integer.parseInt(op[1]));
-			System.out.println("Rank of " + op[1] + " = "+ i);
+			//System.out.println("Rank of " + op[1] + " = "+ i);
+                        System.out.println(i);
 		}
 	}
     
