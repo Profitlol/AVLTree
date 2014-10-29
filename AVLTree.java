@@ -6,6 +6,9 @@ import java.util.*;
  * @author Steven
  */
 public class AVLTree {
+    
+    public Node root;
+    List<String> input; // again using this for the output
 
     public class Node 
     {
@@ -27,13 +30,9 @@ public class AVLTree {
 
         public Node(int num) 
         {
-            this(num, null, null);
+            this(num, null, null); // children, left, right 
         }
-
     }
-
-    public Node root;
-    List<String> input; // again using this for the output
 
     public AVLTree() 
     {
@@ -166,7 +165,9 @@ public class AVLTree {
             x = x.right;        
         return x;
     }
-
+    
+    // the logic happens after searchKey completed
+    // i.e. search for this key
     public boolean search(Node x, int k) 
     {
         if (x == null) 
@@ -177,6 +178,17 @@ public class AVLTree {
             return search(x.left, k);         
         else 
             return search(x.right, k);        
+    }
+    
+    public Node searchKey(Node x, int y)
+    {
+        if (y > x.key)
+            return searchKey(x.right, y);
+        if (y < x.key)
+            return searchKey(x.left, y);
+        if (y == x.key)
+            return x;
+        return null;
     }
 
     public Node successor(Node x) 
@@ -289,17 +301,17 @@ public class AVLTree {
 			return false;
 	}
 
+        /// fix print outs here, debug comments are tehre
 	public void opRunner(String s, AVLTree avl) 
         {
 		String[] op = s.split(" ");	
 		if (op[0].compareTo("IN") == 0) 
 			avl.insert(Integer.parseInt(op[1]));
-                // fix this SC please
 		if (op[0].compareTo("SC") == 0) 
                 {
-			int k = Integer.parseInt(op[1]);
-//			Node suc =;
-//			System.out.println("Successor of: " + k + " = "+ suc.key);
+			int y = Integer.parseInt(op[1]);
+                        Node suc = avl.successor(avl.searchKey(avl.root, y));
+			System.out.println("Successor of: " + y + " = "+ suc.key);
 		}
 		if (op[0].compareTo("SE") == 0) 
                 {
