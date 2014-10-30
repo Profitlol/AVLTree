@@ -9,7 +9,8 @@ public class AVLTree {
     
     public Node root;
     List<String> input; // again using this for the output
-
+    static PrintWriter writer;
+    
     public class Node 
     {
         int key;
@@ -262,15 +263,17 @@ public class AVLTree {
     }
     
     //doing same methods like KHeap
-    public static void main(String[] args) 
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException 
     {		
 		String filepath = "AVLtree-input.txt";
 		AVLTree inp = new AVLTree();
 		inp.loadfile(filepath);
+                writer = new PrintWriter("theOutput.txt", "UTF-8");
 		AVLTree avl = new AVLTree();
 		//double startTime = System.nanoTime();
 		for (String s : inp.input) 
-			inp.opRunner(s, avl);		
+			inp.opRunner(s, avl);
+                writer.close();
 		//double endTime = System.nanoTime();
 		//double elapsed = endTime - startTime;
 		//System.out.println(elapsed/1000.0 + "micro-sec");
@@ -313,6 +316,7 @@ public class AVLTree {
                         Node suc = avl.successor(avl.searchKey(avl.root, y));
 			//System.out.println("Successor of: " + y + " = "+ suc.key);
                         System.out.println(suc.key);
+                        writer.println(suc.key);
 		}
 		if (op[0].compareTo("SE") == 0) 
                 {
@@ -320,12 +324,14 @@ public class AVLTree {
 			Node sel = avl.select(avl.root,k);
 			//System.out.println(k +"th smallest key is: " + sel.key);
                         System.out.println(sel.key);
+                        writer.println(sel.key);
 		}
 		if (op[0].compareTo("RA") == 0) 
                 {
 			int i = avl.rank(avl.root, Integer.parseInt(op[1]));
 			//System.out.println("Rank of " + op[1] + " = "+ i);
                         System.out.println(i);
+                        writer.println(i);
 		}
 	}
     
