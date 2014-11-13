@@ -1,1 +1,2 @@
-how 2 use github
+3102 csc
+feel free to use bros
